@@ -547,9 +547,13 @@ html body .alquiler .acciones a i{
 }
 
 /* ============================================================ 9. RESULTADOS */
+/* width:auto perdía contra nada, pero al llevar #results (1 id) ganaba al
+   width:100% del bloque 8 y encogía la tarjeta al contenido. Mismo valor
+   en los dos sitios para que el orden de especificidad deje de importar. */
 html body #results .box_vertical .venta,
 html body #results .box_vertical .alquiler{
-  width:auto !important; margin:0 !important; max-height:none !important;
+  width:100% !important; margin:0 !important; max-height:none !important;
+  min-width:0;
 }
 html body #results article.paginacion ul li a,
 html body #results article.paginacion ul li span{
