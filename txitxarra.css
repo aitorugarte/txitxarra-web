@@ -26,6 +26,8 @@
   --txx-shadow:0 1px 2px rgba(11,39,64,.06),0 4px 16px rgba(11,39,64,.08);
   --txx-shadow-hi:0 2px 4px rgba(11,39,64,.08),0 12px 32px rgba(11,39,64,.14);
   --txx-ease:cubic-bezier(.2,.6,.3,1);
+
+  --txx-topbar:104px;        /* alto de la barra de contacto — ver bloque 17 */
 }
 
 /* ================================================================
@@ -735,6 +737,45 @@ html body .txx-vacio{ display:none !important; }
   html body #detalle #ficha .header .caracteristicasPrincipales ul li{
     flex:1 1 50%;
     padding:12px 14px !important;
+  }
+}
+
+/* =============================== 17. CABECERA COMPACTA SOBRE EL HERO (home) */
+/* Inmoweb apila cabecera → hero → menú → buscador, y eso come mucho alto.
+   Aquí el menú se superpone a la foto justo bajo la barra de contacto, y el
+   buscador sube a solaparse con el borde inferior del hero.
+
+   --txx-topbar es el alto de la barra de contacto. Es el único número mágico
+   de todo el fichero: si se cambia el tamaño de letra o el padding de esa
+   barra, hay que reajustarlo. Solo afecta a la home y a partir de 768px. */
+@media (min-width:768px){
+  html body #home header{ position:relative; }
+
+  html body #home #navegacion{
+    position:absolute !important;
+    top:var(--txx-topbar) !important;
+    left:0; right:0;
+    width:100% !important;
+    background:rgba(11,39,64,.62) !important;
+    -webkit-backdrop-filter:blur(8px);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid rgba(255,255,255,.14);
+    z-index:9;
+  }
+  /* el JS de Inmoweb le pone .fixed al hacer scroll; que no se mueva */
+  html body #home #navegacion.fixed{ top:var(--txx-topbar) !important; }
+
+  /* el hero ya no comparte alto con el menú, así que puede crecer */
+  html body #home #slider,
+  html body #home #slider .nivoSlider,
+  html body #home header #slider #slideshow img{
+    height:min(66vh,620px) !important;
+  }
+
+  /* y el buscador se solapa con el borde inferior de la foto */
+  html body #home #buscador{
+    margin-top:-104px !important;
+    z-index:7;
   }
 }
 
