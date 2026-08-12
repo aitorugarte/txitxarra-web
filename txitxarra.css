@@ -28,6 +28,7 @@
   --txx-ease:cubic-bezier(.2,.6,.3,1);
 
   --txx-topbar:104px;        /* alto de la barra de contacto — ver bloque 17 */
+  --txx-navbar:60px;         /* alto de la barra de menú — ver bloque 5      */
 }
 
 /* ================================================================
@@ -187,6 +188,15 @@ html body header .datosContacto address ul li.agencia{
 /* Contacto repetido 4 veces en la home: dejamos solo cabecera y footer */
 html body#home article#mainText .datosContacto{ display:none !important; }
 
+/* El logo original mide 327×61, pero Inmoweb lo capa a max-width:260px, así
+   que lo estaba encogiendo. Este tope permite el tamaño natural del actual y
+   también el de logo-transparente.png (395×87) si se sube al backoffice. */
+html body #logo a img{
+  max-width:395px !important;
+  max-height:87px !important;
+  width:auto !important; height:auto !important;
+}
+
 /* =========================================================== 5. NAVEGACIÓN */
 /* La barra la pinta #navegacion (100% de ancho). El <nav> de Inmoweb lleva
    ancho fijo (768/984/1220px) y #navLinks su propio fondo: dos bloques de
@@ -220,6 +230,20 @@ html body #navegacion nav{
   }
   html body #navegacion #navHeader > ul#navLinks{ margin:0 !important; }
 }
+/* Al hacer scroll, el JS de Inmoweb le pone .fixed al menú, pero su CSS lo
+   manda a position:absolute. Resultado medido: el menú sale del flujo, la
+   cabecera encoge de 155px a 95px — la página pega un salto de 60px — y el
+   menú tampoco queda fijo, se va con el scroll. Aquí sí se queda fijo, y se
+   reserva su hueco en la cabecera para que no salte. */
+html body #navegacion.fixed{
+  position:fixed !important;
+  top:0 !important; left:0; right:0;
+  width:100% !important;
+  z-index:9000;
+  box-shadow:0 2px 12px rgba(11,39,64,.28);
+}
+html body header:has(#navegacion.fixed){ padding-bottom:var(--txx-navbar); }
+
 /* Inmoweb deja el hover en #292929, que no es de la paleta */
 html body #navegacion ul li a:hover,
 html body #navegacion ul li.activo a,
@@ -771,8 +795,14 @@ html body .txx-vacio{ display:none !important; }
     border-bottom:1px solid rgba(255,255,255,.14);
     z-index:9;
   }
-  /* el JS de Inmoweb le pone .fixed al hacer scroll; que no se mueva */
-  html body#home #navegacion.fixed{ top:var(--txx-topbar) !important; }
+  /* Aquí el menú ya va absoluto sobre el hero, así que ni se fija al hacer
+     scroll ni deja hueco que compensar. Anula el tratamiento del bloque 5. */
+  html body#home #navegacion.fixed{
+    position:absolute !important;
+    top:var(--txx-topbar) !important;
+    box-shadow:none;
+  }
+  html body#home header:has(#navegacion.fixed){ padding-bottom:0; }
 
   /* el hero ya no comparte alto con el menú, así que puede crecer */
   html body#home #slider,
