@@ -38,15 +38,15 @@
    ================================================================ */
 html body h2,
 html body .venta h3, html body .alquiler h3,
-html body #results .box_horizontal .venta h3,
-html body #results .box_horizontal .alquiler h3,
+html body#results .box_horizontal .venta h3,
+html body#results .box_horizontal .alquiler h3,
 html body #detalle #ficha div.colIzq .detallesFicha ul li strong,
 html body #detalle #ficha div.colDch .detallesFicha ul li strong,
 html body #detalle #ficha .header .caracteristicasPrincipales ul li strong,
-html body #details #detalle #ficha .header .headerTitulo .headerLeft p span,
-html body #results article.paginacion ul li span,
-html body #results article.paginacion ul li a,
-html body #details .breadcrumbs li.activo a,
+html body#details #detalle #ficha .header .headerTitulo .headerLeft p span,
+html body#results article.paginacion ul li span,
+html body#results article.paginacion ul li a,
+html body#details .breadcrumbs li.activo a,
 html body a:hover, html body a:active{
   color:var(--txx-navy) !important;
 }
@@ -60,8 +60,8 @@ html body footer,
 html body #detalle #fichaScroll,
 html body .venta figure div.mask div.referencia span.numeroRef,
 html body .alquiler figure div.mask div.referencia span.numeroRef,
-html body #results article.paginacion ul li span.activa,
-html body #results article.paginacion ul li a:hover,
+html body#results article.paginacion ul li span.activa,
+html body#results article.paginacion ul li a:hover,
 html body .btn,
 html body #buscador div#openProperty form:first-child button,
 html body .venta .acciones a, html body .alquiler .acciones a{
@@ -185,7 +185,7 @@ html body header .datosContacto address ul li.agencia{
   letter-spacing:.02em;
 }
 /* Contacto repetido 4 veces en la home: dejamos solo cabecera y footer */
-html body #home article#mainText .datosContacto{ display:none !important; }
+html body#home article#mainText .datosContacto{ display:none !important; }
 
 /* =========================================================== 5. NAVEGACIÓN */
 /* La barra la pinta #navegacion (100% de ancho). El <nav> de Inmoweb lleva
@@ -198,6 +198,27 @@ html body #navegacion nav{
 }
 @media (min-width:768px){
   html body #navegacion #navHeader #navLinks{ background:transparent !important; }
+
+  /* OJO: ul#idiomas NO cuelga de #navHeader, sino directamente de <nav>, que
+     Inmoweb pone a display:table. Su float:right caía a una segunda línea.
+     Poniendo <nav> en fila flex, el idioma se va al extremo derecho. */
+  html body #navegacion nav{
+    display:flex !important;
+    align-items:center;
+    flex-wrap:nowrap;
+  }
+  html body #navegacion nav > #navHeader{ flex:0 1 auto; }
+  html body #navegacion nav > ul#idiomas{
+    float:none !important;
+    flex:0 0 auto;
+    margin-left:auto !important;
+  }
+  html body #navegacion #navHeader{
+    display:flex !important;
+    align-items:center;
+    flex-wrap:nowrap;
+  }
+  html body #navegacion #navHeader > ul#navLinks{ margin:0 !important; }
 }
 /* Inmoweb deja el hover en #292929, que no es de la paleta */
 html body #navegacion ul li a:hover,
@@ -222,12 +243,12 @@ html body #navegacion #navHeader #searchToggle button{
 }
 
 /* ================================================================ 6. HERO */
-html body #home #slider{
+html body#home #slider{
   height:min(58vh,560px) !important;   /* Inmoweb/fork: 850px fijos */
   padding-top:0 !important;
 }
-html body #home #slider .nivoSlider,
-html body #home header #slider #slideshow img{
+html body#home #slider .nivoSlider,
+html body#home header #slider #slideshow img{
   height:min(58vh,560px) !important;
   width:100% !important;
   left:0 !important; margin-left:0 !important;
@@ -257,9 +278,9 @@ html body #slider #slideshow .nivo-caption p{
   font-weight:400 !important; letter-spacing:0 !important;
 }
 @media (max-width:767px){
-  html body #home #slider,
-  html body #home #slider .nivoSlider,
-  html body #home header #slider #slideshow img{ height:44vh !important; }
+  html body#home #slider,
+  html body#home #slider .nivoSlider,
+  html body#home header #slider #slideshow img{ height:44vh !important; }
 }
 
 /* ============================================================ 7. BUSCADOR */
@@ -378,7 +399,7 @@ html body article.offers .row > .alquiler{
 }
 html body .venta,
 html body .alquiler{
-  width:auto !important;
+  width:100% !important;               /* Inmoweb: 31.333% de imp_box_..._3col */
   max-width:none !important;
   max-height:none !important;          /* mata el max-height:425px que recorta */
   margin:0 !important;
@@ -549,16 +570,15 @@ html body .alquiler .acciones a i{
 }
 
 /* ============================================================ 9. RESULTADOS */
-/* width:auto perdía contra nada, pero al llevar #results (1 id) ganaba al
-   width:100% del bloque 8 y encogía la tarjeta al contenido. Mismo valor
-   en los dos sitios para que el orden de especificidad deje de importar. */
-html body #results .box_vertical .venta,
-html body #results .box_vertical .alquiler{
+/* OJO con el selector: #results es el propio <body>, no un descendiente.
+   el id del body va PEGADO a body, sin espacio. Ver nota al final. */
+html body#results .box_vertical .venta,
+html body#results .box_vertical .alquiler{
   width:100% !important; margin:0 !important; max-height:none !important;
   min-width:0;
 }
-html body #results article.paginacion ul li a,
-html body #results article.paginacion ul li span{
+html body#results article.paginacion ul li a,
+html body#results article.paginacion ul li span{
   min-width:44px; min-height:44px;
   display:inline-flex; align-items:center; justify-content:center;
   border-radius:var(--txx-r);
@@ -691,21 +711,10 @@ html body .txx-vacio{ display:none !important; }
 /* Breakpoint de Inmoweb: 0-767. */
 @media (max-width:767px){
 
-  /* Inmoweb oculta la barra de contacto entera, y con ella el teléfono,
-     que es el CTA de la agencia. Se recupera solo el teléfono y el móvil. */
-  html body header .datosContacto{ display:block !important; }
-  html body header .datosContacto address ul{
-    justify-content:center; gap:0 16px; padding:0 12px;
-  }
-  html body header .datosContacto address ul li{
-    line-height:40px; font-size:13px;
-  }
-  html body header .datosContacto address ul li.telefono,
-  html body header .datosContacto address ul li.movil{ font-size:17px; }
-  /* el resto (dirección, email, nombre) satura una pantalla estrecha */
-  html body header .datosContacto address ul li:not(.telefono):not(.movil){
-    display:none !important;
-  }
+  /* NOTA: aquí había un intento de recuperar la barra de contacto (Inmoweb la
+     oculta por debajo de 767px y con ella el teléfono, que es el CTA). Se
+     retiró: no llegaba a pintar el teléfono y no se pudo verificar en un
+     móvil real. Pendiente de rehacer con emulación de dispositivo. */
 
   /* Una sola columna de tarjetas */
   html body article.offers .row{
@@ -749,9 +758,9 @@ html body .txx-vacio{ display:none !important; }
    de todo el fichero: si se cambia el tamaño de letra o el padding de esa
    barra, hay que reajustarlo. Solo afecta a la home y a partir de 768px. */
 @media (min-width:768px){
-  html body #home header{ position:relative; }
+  html body#home header{ position:relative; }
 
-  html body #home #navegacion{
+  html body#home #navegacion{
     position:absolute !important;
     top:var(--txx-topbar) !important;
     left:0; right:0;
@@ -763,17 +772,17 @@ html body .txx-vacio{ display:none !important; }
     z-index:9;
   }
   /* el JS de Inmoweb le pone .fixed al hacer scroll; que no se mueva */
-  html body #home #navegacion.fixed{ top:var(--txx-topbar) !important; }
+  html body#home #navegacion.fixed{ top:var(--txx-topbar) !important; }
 
   /* el hero ya no comparte alto con el menú, así que puede crecer */
-  html body #home #slider,
-  html body #home #slider .nivoSlider,
-  html body #home header #slider #slideshow img{
+  html body#home #slider,
+  html body#home #slider .nivoSlider,
+  html body#home header #slider #slideshow img{
     height:min(66vh,620px) !important;
   }
 
   /* y el buscador se solapa con el borde inferior de la foto */
-  html body #home #buscador{
+  html body#home #buscador{
     margin-top:-104px !important;
     z-index:7;
   }
