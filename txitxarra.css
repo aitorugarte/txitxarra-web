@@ -818,6 +818,45 @@ html body .txx-vacio{ display:none !important; }
   }
 }
 
+/* ============================ 18. FORMULARIOS DEL CONTENIDO */
+/* Captación, contacto y el "Más información" de la ficha salían como cajas
+   grises sin borde: Inmoweb no los estiliza y la capa solo trataba el
+   buscador y el newsletter. Se excluye el buscador, que tiene su propio
+   tratamiento en el bloque 7, y los filtros estrechos de resultados. */
+html body #content form input[type=text],
+html body #content form input[type=email],
+html body #content form input[type=tel],
+html body #content form input[type=password],
+html body #content form select,
+html body #content form textarea{
+  background:var(--txx-white) !important;
+  border:1px solid var(--txx-line) !important;
+  border-radius:var(--txx-r) !important;
+  min-height:44px;
+  padding:0 12px;
+  font-family:var(--txx-sans) !important;
+  font-size:16px;                      /* 16px evita el zoom de iOS */
+  color:var(--txx-ink) !important;
+  box-sizing:border-box;
+}
+html body #content form textarea{
+  padding:10px 12px;
+  min-height:120px;
+  line-height:1.5;
+}
+/* el buscador y los filtros laterales conservan sus tamaños */
+html body #buscador form input,
+html body #buscador form select,
+html body #leyenda form input,
+html body #leyenda form select{
+  min-height:0;
+}
+html body #content form label{
+  font-size:13px; font-weight:700;
+  color:var(--txx-muted) !important;
+  letter-spacing:.02em;
+}
+
 /* ======================================================= 15. MOVIMIENTO */
 @media (prefers-reduced-motion:reduce){
   html body *,
