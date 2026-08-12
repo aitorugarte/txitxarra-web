@@ -1,0 +1,11 @@
+# Repo público servido por jsDelivr.
+# Solo se publica la capa que carga Inmoweb; el resto es material de trabajo
+# y no debe salir de local (CONTEXTO.md documenta incidencias internas).
+
+# Ignorar todo por defecto…
+*
+
+# …salvo lo que sirve el CDN:
+!.gitignore
+!txitxarra.css
+!txitxarra.js

@@ -327,6 +327,8 @@ html body .alquiler{
   max-height:none !important;          /* mata el max-height:425px que recorta */
   margin:0 !important;
   float:none !important;
+  position:relative;                   /* bloque contenedor de .etiqueta:
+                                          ninguna hoja de Inmoweb lo establece */
   display:flex !important; flex-direction:column;
   background:var(--txx-white);
   border:1px solid var(--txx-line);
@@ -395,6 +397,7 @@ html body .alquiler .contenido{
 html body .venta .contenido .precio,
 html body .alquiler .contenido .precio{
   order:-1;
+  height:auto !important;              /* Inmoweb: height:55px → hueco vacío */
   border-top:none !important;
   padding:2px 20px 0 !important;
   width:auto !important; float:none !important;
@@ -455,21 +458,38 @@ html body .alquiler ul.caracteristicas li{
 }
 html body .venta ul.caracteristicas li span,
 html body .alquiler ul.caracteristicas li span{ color:var(--txx-muted) !important; }
+/* Inmoweb oculta los iconos wxp dentro de la tarjeta (main.css:903).
+   El gap:6px del li está pensado para ellos: los recuperamos. */
+html body .venta ul.caracteristicas li i,
+html body .alquiler ul.caracteristicas li i{
+  display:inline-block !important;
+  font-size:15px; line-height:1;
+  color:var(--txx-navy) !important;
+}
 html body .venta ul.caracteristicas.ocultar,
 html body .alquiler ul.caracteristicas.ocultar{ display:flex !important; }
 /* Botón: área táctil de 44px, ancho completo al pie de la tarjeta */
 html body .venta .acciones,
 html body .alquiler .acciones{
+  display:block !important;             /* Inmoweb lo oculta entero (main.css:903) */
   margin-top:auto; padding:0 20px 18px; background:none !important;
 }
 html body .venta .acciones a,
 html body .alquiler .acciones a{
   display:flex !important; align-items:center; justify-content:center; gap:8px;
   min-height:44px; width:100%;
+  padding:0 20px !important;            /* Inmoweb: 8px 36px 8px 25px, asimétrico */
   border-radius:var(--txx-r) !important;
   font-weight:700; font-size:15px;
   color:var(--txx-white) !important;
   text-decoration:none;
+  box-sizing:border-box;
+}
+/* El <i> era absoluto para colgar del padding derecho de 36px */
+html body .venta .acciones a i,
+html body .alquiler .acciones a i{
+  position:static !important;
+  right:auto !important; top:auto !important;
 }
 
 /* ============================================================ 9. RESULTADOS */
