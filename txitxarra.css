@@ -1,0 +1,588 @@
+/*! ==========================================================================
+ *  txitxarra.css — capa de estilos sobre la plantilla estructura_02 / tema_4
+ *  Carga:  <link rel="stylesheet" href=".../txitxarra.css?v=1">
+ *  No desactiva ninguna hoja de Inmoweb. Gana por especificidad (html body).
+ *  v1.0 — agosto 2026
+ * ========================================================================== */
+
+/* ---------------------------------------------------------------- TOKENS */
+:root{
+  --txx-navy:#164B7F;        /* marca. 8,95:1 sobre blanco                  */
+  --txx-navy-deep:#0F3557;   /* hover: oscurece, no cambia de tono. 12,6:1  */
+  --txx-navy-ink:#0B2740;    /* footer. 15,2:1                              */
+  --txx-minio:#A8431C;       /* acento. 6,03:1 en AMBAS direcciones         */
+  --txx-minio-deep:#8A3616;
+
+  --txx-ink:#1A1F26;         /* texto. 16,6:1                               */
+  --txx-muted:#5A6570;       /* secundario. 5,95:1 — pasa AA                */
+  --txx-paper:#F5F7F9;
+  --txx-line:#DDE3E8;
+  --txx-white:#fff;
+
+  --txx-sans:Karla,"Segoe UI",system-ui,sans-serif;
+  --txx-display:Bitter,Georgia,serif;
+
+  --txx-r:4px;
+  --txx-shadow:0 1px 2px rgba(11,39,64,.06),0 4px 16px rgba(11,39,64,.08);
+  --txx-shadow-hi:0 2px 4px rgba(11,39,64,.08),0 12px 32px rgba(11,39,64,.14);
+  --txx-ease:cubic-bezier(.2,.6,.3,1);
+}
+
+/* ================================================================
+   1. NEUTRALIZAR tema_4.css
+   Sus reglas usan !important, así que replicamos sus grupos de
+   selectores con el prefijo html body: a igual !important, gana
+   la mayor especificidad.
+   ================================================================ */
+html body h2,
+html body .venta h3, html body .alquiler h3,
+html body #results .box_horizontal .venta h3,
+html body #results .box_horizontal .alquiler h3,
+html body #detalle #ficha div.colIzq .detallesFicha ul li strong,
+html body #detalle #ficha div.colDch .detallesFicha ul li strong,
+html body #detalle #ficha .header .caracteristicasPrincipales ul li strong,
+html body #details #detalle #ficha .header .headerTitulo .headerLeft p span,
+html body #results article.paginacion ul li span,
+html body #results article.paginacion ul li a,
+html body #details .breadcrumbs li.activo a,
+html body a:hover, html body a:active{
+  color:var(--txx-navy) !important;
+}
+
+html body h2:before,
+html body #navegacion,
+html body #navegacion #navHeader #navLinks,
+html body .dropDownMenu ul,
+html body .promocion,
+html body footer,
+html body #detalle #fichaScroll,
+html body .venta figure div.mask div.referencia span.numeroRef,
+html body .alquiler figure div.mask div.referencia span.numeroRef,
+html body #results article.paginacion ul li span.activa,
+html body #results article.paginacion ul li a:hover,
+html body .btn,
+html body #buscador div#openProperty form:first-child button,
+html body .venta .acciones a, html body .alquiler .acciones a{
+  background:var(--txx-navy) !important;
+}
+
+html body .flecha,
+html body #navegacion ul li:hover > a,
+html body #navegacion ul li > a:hover,
+html body #navegacion ul li.dropDownMenu:hover ul li:hover,
+html body #navegacion ul#idiomas li ul li:hover > a,
+html body #navegacion #navHeader #navToggle button,
+html body #navegacion #navHeader #searchToggle button,
+html body .ui-widget-header,
+html body aside #mailingList form .line.email:before{
+  background:var(--txx-navy-deep) !important;
+}
+
+html body .btn:hover,
+html body .flecha:hover,
+html body #buscador div#openProperty form:first-child button:hover,
+html body .venta .acciones a:hover, html body .alquiler .acciones a:hover{
+  background:var(--txx-navy-ink) !important;
+}
+
+html body #navLinks > li.dropDownMenu > ul:before,
+html body #operationList > li.dropDownMenu > ul:before,
+html body #idiomas > li.dropDownMenu > ul:before{
+  border-bottom-color:var(--txx-navy) !important;
+}
+
+/* =============================================================== 2. BASE */
+html body{
+  font-family:var(--txx-sans) !important;
+  font-size:16px;
+  line-height:1.55;
+  color:var(--txx-ink);
+  transition:none !important;          /* Inmoweb pone transition:all .5s en body */
+  -webkit-font-smoothing:antialiased;
+}
+html body h1, html body h2, html body h3,
+html body .venta h3, html body .alquiler h3,
+html body #detalle #ficha .header .headerTitulo .headerLeft h1{
+  font-family:var(--txx-display) !important;
+  font-weight:600;
+  letter-spacing:-.01em;
+  text-transform:none !important;
+}
+html body h2{
+  font-size:clamp(1.4rem,2.4vw,1.9rem);
+  color:var(--txx-ink) !important;
+}
+/* Firma: línea de flotación bajo los títulos de sección */
+html body article.offers h2,
+html body article#mainText h2{
+  position:relative;
+  padding-bottom:14px;
+  margin-bottom:28px;
+}
+html body article.offers h2:after,
+html body article#mainText h2:after{
+  content:"";
+  position:absolute; left:0; bottom:0;
+  width:56px; height:3px;
+  background:var(--txx-minio);
+}
+/* Inmoweb pinta un bloque de color en h2:before — lo apagamos */
+html body h2:before{ display:none !important; }
+
+html body p{ max-width:70ch; }
+
+/* ======================================================= 3. FOCO VISIBLE */
+html body a:focus-visible,
+html body button:focus-visible,
+html body input:focus-visible,
+html body select:focus-visible,
+html body [tabindex]:focus-visible{
+  outline:3px solid var(--txx-minio) !important;
+  outline-offset:2px !important;
+  border-radius:2px;
+}
+
+/* ============================================ 4. CABECERA Y BARRA DE CONTACTO */
+html body header .datosContacto{
+  background:var(--txx-navy-ink) !important;
+  width:100% !important;
+  left:0 !important; margin-left:0 !important;
+  z-index:10;
+}
+html body header .datosContacto address ul{
+  width:auto;
+  display:flex; flex-wrap:wrap; align-items:center; gap:0 22px;
+  max-width:1400px; margin:0 auto; padding:0 20px;
+}
+html body header .datosContacto address ul li{
+  color:rgba(255,255,255,.82) !important;
+  float:none !important;
+  margin:0 !important;
+  height:auto; line-height:44px;
+  font-size:14px;
+}
+html body header .datosContacto address ul li a{
+  color:var(--txx-white) !important;
+  text-decoration:none;
+}
+/* El teléfono es el CTA real de una inmobiliaria de barrio */
+html body header .datosContacto address ul li.telefono,
+html body header .datosContacto address ul li.movil{
+  font-family:var(--txx-display);
+  font-size:20px; font-weight:600;
+  font-variant-numeric:tabular-nums;
+}
+html body header .datosContacto address ul li.telefono a,
+html body header .datosContacto address ul li.movil a{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:4px 0;
+}
+html body header .datosContacto address ul li.agencia{
+  font-family:var(--txx-display);
+  font-weight:700; color:var(--txx-white) !important;
+  letter-spacing:.02em;
+}
+/* Contacto repetido 4 veces en la home: dejamos solo cabecera y footer */
+html body #home article#mainText .datosContacto{ display:none !important; }
+
+/* =========================================================== 5. NAVEGACIÓN */
+html body #navegacion nav{ max-width:1400px; margin:0 auto; }
+html body #navegacion ul li > a{
+  font-family:var(--txx-sans) !important;
+  font-size:15px; font-weight:700;
+  letter-spacing:.01em;
+}
+html body #navLinks > li > a{ padding:0 18px; }
+html body #navLinks > li.active > a{
+  box-shadow:inset 0 -3px 0 var(--txx-minio);
+}
+/* Área táctil mínima */
+html body #navegacion #navHeader #navToggle button,
+html body #navegacion #navHeader #searchToggle button{
+  min-width:48px; min-height:48px;
+}
+
+/* ================================================================ 6. HERO */
+html body #home #slider{
+  height:min(58vh,560px) !important;   /* Inmoweb/fork: 850px fijos */
+  padding-top:0 !important;
+}
+html body #home #slider .nivoSlider,
+html body #home header #slider #slideshow img{
+  height:min(58vh,560px) !important;
+  width:100% !important;
+  left:0 !important; margin-left:0 !important;
+  object-fit:cover !important;
+}
+html body #slider:after{                /* velo para que el logo lea sobre foto */
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(180deg,rgba(11,39,64,.42) 0%,rgba(11,39,64,.12) 45%,rgba(11,39,64,.5) 100%);
+  pointer-events:none; z-index:1;
+}
+html body #slider #slideshow .nivo-caption{
+  z-index:2;
+  max-width:min(640px,86vw) !important;
+  width:auto !important;
+  left:50% !important;
+}
+html body #slider #slideshow .nivo-caption h3{
+  font-family:var(--txx-display) !important;
+  font-size:clamp(2rem,4.6vw,3.4rem) !important;
+  font-weight:700; line-height:1.08;
+  text-transform:none !important;
+  text-shadow:0 2px 24px rgba(11,39,64,.5);
+}
+html body #slider #slideshow .nivo-caption p{
+  font-family:var(--txx-sans) !important;
+  font-size:clamp(1rem,1.6vw,1.15rem) !important;
+  font-weight:400 !important; letter-spacing:0 !important;
+}
+@media (max-width:767px){
+  html body #home #slider,
+  html body #home #slider .nivoSlider,
+  html body #home header #slider #slideshow img{ height:44vh !important; }
+}
+
+/* ============================================================ 7. BUSCADOR */
+html body #buscador > div{
+  width:100% !important;
+  max-width:1100px;
+  min-height:0 !important;
+  margin:0 auto;
+  animation:none !important;            /* fuera el wobble */
+  background:var(--txx-white);
+  box-shadow:var(--txx-shadow-hi);
+  border-radius:var(--txx-r);
+  border-top:3px solid var(--txx-minio);
+  padding:18px 20px;
+  box-sizing:border-box;
+}
+/* Una sola pestaña: no necesita tira vertical */
+html body #buscador > div ul.tabs{
+  position:static !important; left:auto !important;
+  width:auto !important; border:none !important;
+  margin-bottom:10px;
+}
+html body #buscador > div ul.tabs li a{
+  writing-mode:horizontal-tb !important;
+  height:auto !important;
+  background:none !important;
+  padding:0 !important; margin:0 !important;
+  font-family:var(--txx-display); font-weight:600;
+  font-size:15px; color:var(--txx-navy) !important;
+}
+/* Fila horizontal en escritorio */
+@media (min-width:1024px){
+  html body #buscador div#openProperty > form#globalForm > fieldset{
+    display:grid;
+    grid-template-columns:repeat(4,1fr) auto;
+    gap:14px; align-items:end;
+  }
+  html body #buscador div#openProperty > form#globalForm > fieldset > div.line{
+    width:auto !important; float:none !important; margin:0 !important; padding:0 !important;
+  }
+  html body #buscador div#openProperty > form#refForm{
+    border-top:1px solid var(--txx-line);
+    margin-top:14px; padding-top:12px;
+  }
+}
+html body #buscador form div.line label{
+  font-size:13px; font-weight:700;
+  color:var(--txx-muted) !important;
+  text-transform:uppercase; letter-spacing:.06em;
+  margin-bottom:6px; display:block;
+}
+html body #buscador .globalSelector{
+  border:1px solid var(--txx-line) !important;
+  border-radius:var(--txx-r) !important;
+  min-height:46px !important;
+  background:var(--txx-white);
+}
+html body #buscador .btn,
+html body #buscador button[type=submit]{
+  min-height:46px; padding:0 26px;
+  border-radius:var(--txx-r) !important;
+  font-family:var(--txx-sans); font-weight:700; font-size:15px;
+  letter-spacing:.02em;
+}
+html body #buscador .btn[disabled]{ opacity:.55; cursor:not-allowed; }
+html body #buscador .busquedaAvanzada > a{
+  color:var(--txx-navy) !important;
+  font-weight:700; text-decoration:underline;
+  text-underline-offset:3px;
+}
+
+/* ==================================== 8. TARJETAS DE PROPIEDAD (el núcleo) */
+html body article.offers .row{
+  display:grid !important;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:26px;
+  width:100% !important;
+  padding:0 !important;
+}
+html body .venta,
+html body .alquiler{
+  width:auto !important;
+  max-width:none !important;
+  max-height:none !important;          /* mata el max-height:425px que recorta */
+  margin:0 !important;
+  float:none !important;
+  display:flex !important; flex-direction:column;
+  background:var(--txx-white);
+  border:1px solid var(--txx-line);
+  border-radius:var(--txx-r);
+  overflow:hidden;
+  box-shadow:var(--txx-shadow);
+  transition:box-shadow .25s var(--txx-ease),transform .25s var(--txx-ease);
+}
+html body .venta:hover,
+html body .alquiler:hover{
+  box-shadow:var(--txx-shadow-hi);
+  transform:translateY(-3px);
+}
+/* Foto: proporción fija = cero salto de layout */
+html body .venta figure,
+html body .alquiler figure{
+  margin:0; position:relative;
+  border-bottom:3px solid var(--txx-minio);   /* ← línea de flotación */
+}
+html body .venta figure img,
+html body .alquiler figure img{
+  aspect-ratio:585/335;
+  width:100%; height:auto;
+  object-fit:cover; display:block;
+}
+/* Pastilla "Exclusiva": plana. !important de autor gana al style inline */
+html body .venta .etiqueta,
+html body .alquiler .etiqueta{
+  transform:none !important;
+  top:14px !important; left:14px !important; right:auto !important;
+  height:auto !important; width:auto !important;
+  padding:5px 12px !important;
+  background:var(--txx-minio) !important;
+  border:none !important;
+  border-radius:2px !important;
+  font-family:var(--txx-sans) !important;
+  font-size:11px !important; font-weight:700 !important;
+  letter-spacing:.09em !important;
+  line-height:1.4 !important;
+  text-align:left !important;
+  box-shadow:0 2px 8px rgba(11,39,64,.35) !important;
+}
+html body .venta figure div.mask div.referencia span.numeroRef,
+html body .alquiler figure div.mask div.referencia span.numeroRef{
+  font-family:var(--txx-sans);
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.04em;
+}
+/* Barrio = titular. Es el diferencial de una agencia hiperlocal */
+html body .venta h3,
+html body .alquiler h3{
+  font-family:var(--txx-display) !important;
+  font-size:20px !important; font-weight:700;
+  color:var(--txx-ink) !important;
+  padding:18px 20px 0 !important;
+  margin:0 !important;
+  line-height:1.25;
+}
+html body .venta .contenido,
+html body .alquiler .contenido{
+  display:flex; flex-direction:column;
+  flex:1;
+  padding:0 0 4px;
+}
+/* Precio primero: es el dato número uno */
+html body .venta .contenido .precio,
+html body .alquiler .contenido .precio{
+  order:-1;
+  border-top:none !important;
+  padding:2px 20px 0 !important;
+  width:auto !important; float:none !important;
+  text-align:left !important;
+}
+html body .venta .contenido .precio p,
+html body .alquiler .contenido .precio p{ width:auto !important; margin:0; }
+html body .venta .precio span.actual,
+html body .alquiler .precio span.actual{
+  font-family:var(--txx-display);
+  font-size:26px !important; font-weight:700;
+  color:var(--txx-minio) !important;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-.015em;
+}
+html body .venta .contenido .descripcionCaracteristicas,
+html body .alquiler .contenido .descripcionCaracteristicas{
+  height:auto !important;               /* Inmoweb: height:100px → recorta */
+  min-height:0 !important;
+  flex:1;
+  padding:10px 20px 0 !important;
+}
+html body .venta .descripcionCaracteristicas h4,
+html body .alquiler .descripcionCaracteristicas h4{
+  font-family:var(--txx-sans) !important;
+  font-size:14px !important; font-weight:700;
+  text-transform:uppercase; letter-spacing:.05em;
+  color:var(--txx-muted) !important;
+  margin:0 0 8px !important;
+}
+html body .venta .descripcionCaracteristicas h4 a,
+html body .alquiler .descripcionCaracteristicas h4 a{ color:inherit !important; }
+html body .venta .descripcion,
+html body .alquiler .descripcion{
+  display:-webkit-box !important;
+  -webkit-line-clamp:3;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  float:none !important;
+  font-size:14.5px; line-height:1.5;
+  color:var(--txx-muted) !important;
+  margin:0 0 14px !important;
+  max-width:none;
+}
+html body .venta ul.caracteristicas,
+html body .alquiler ul.caracteristicas{
+  display:flex !important; flex-wrap:wrap; gap:6px 18px;
+  list-style:none; margin:0 0 14px !important; padding:0;
+  border-top:1px solid var(--txx-line);
+  padding-top:12px !important;
+}
+html body .venta ul.caracteristicas li,
+html body .alquiler ul.caracteristicas li{
+  float:none !important; width:auto !important;
+  font-size:14px; color:var(--txx-ink) !important;
+  font-variant-numeric:tabular-nums;
+  display:inline-flex; align-items:center; gap:6px;
+}
+html body .venta ul.caracteristicas li span,
+html body .alquiler ul.caracteristicas li span{ color:var(--txx-muted) !important; }
+html body .venta ul.caracteristicas.ocultar,
+html body .alquiler ul.caracteristicas.ocultar{ display:flex !important; }
+/* Botón: área táctil de 44px, ancho completo al pie de la tarjeta */
+html body .venta .acciones,
+html body .alquiler .acciones{
+  margin-top:auto; padding:0 20px 18px; background:none !important;
+}
+html body .venta .acciones a,
+html body .alquiler .acciones a{
+  display:flex !important; align-items:center; justify-content:center; gap:8px;
+  min-height:44px; width:100%;
+  border-radius:var(--txx-r) !important;
+  font-weight:700; font-size:15px;
+  color:var(--txx-white) !important;
+  text-decoration:none;
+}
+
+/* ============================================================ 9. RESULTADOS */
+html body #results .box_vertical .venta,
+html body #results .box_vertical .alquiler{
+  width:auto !important; margin:0 !important; max-height:none !important;
+}
+html body #results article.paginacion ul li a,
+html body #results article.paginacion ul li span{
+  min-width:44px; min-height:44px;
+  display:inline-flex; align-items:center; justify-content:center;
+  border-radius:var(--txx-r);
+}
+
+/* ================================================================ 10. FICHA */
+html body #detalle #ficha .header .headerTitulo .headerLeft h1{
+  font-size:clamp(1.5rem,3vw,2.1rem) !important;
+  line-height:1.15;
+}
+html body #detalle #ficha .header .headerTitulo .headerRight .precio{
+  font-family:var(--txx-display);
+  color:var(--txx-minio) !important;
+  font-variant-numeric:tabular-nums;
+}
+html body #detalle #ficha .header .caracteristicasPrincipales ul{
+  display:flex; flex-wrap:wrap; gap:0;
+  border-top:1px solid var(--txx-line);
+  border-bottom:1px solid var(--txx-line);
+}
+html body #detalle #ficha .header .caracteristicasPrincipales ul li{
+  flex:1 1 130px;
+  padding:16px 18px !important;
+  border-right:1px solid var(--txx-line);
+  font-size:14px; color:var(--txx-muted) !important;
+}
+html body #detalle #ficha .header .caracteristicasPrincipales ul li:last-child{ border-right:none; }
+html body #detalle #ficha .header .caracteristicasPrincipales ul li strong{
+  display:block;
+  font-family:var(--txx-display);
+  font-size:22px; font-weight:700;
+  color:var(--txx-ink) !important;
+  font-variant-numeric:tabular-nums;
+}
+html body #detalle #ficha .actionBar a.hazOferta{
+  background:var(--txx-minio) !important;
+  min-height:46px;
+}
+html body #detalle #ficha .actionBar a.hazOferta:hover{ background:var(--txx-minio-deep) !important; }
+
+/* =========================================================== 11. NEWSLETTER */
+html body aside{ background:var(--txx-paper) !important; }
+html body aside #mailingList h3{
+  font-family:var(--txx-display) !important;
+  font-size:1.35rem; color:var(--txx-ink) !important;
+}
+/* El <p> repite literalmente el <h3> */
+html body aside #mailingList > div > p{ display:none !important; }
+html body aside #mailingList form .line.email input{
+  min-height:48px; font-size:16px;      /* 16px evita el zoom de iOS */
+  border:1px solid var(--txx-line) !important;
+  border-radius:var(--txx-r) !important;
+  padding:0 14px;
+}
+html body aside #mailingList .txx-label{
+  display:block; font-size:13px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.06em;
+  color:var(--txx-muted); margin-bottom:6px;
+}
+html body aside #mailingList form .line.checkbox p{ font-size:13.5px; line-height:1.45; }
+html body #newsletter_btn{ min-height:46px; border-radius:var(--txx-r) !important; }
+
+/* =============================================================== 12. FOOTER */
+html body footer{ background:var(--txx-navy-ink) !important; }
+html body footer #creditos{ border-top:1px solid rgba(255,255,255,.12); }
+html body footer a{ color:rgba(255,255,255,.9) !important; }
+html body footer a:hover{ color:var(--txx-white) !important; text-decoration:underline; }
+/* WhatsApp: 56px, por encima del pulgar y del botón "subir" */
+html body #whatsapp_chat a{
+  display:flex !important; align-items:center; justify-content:center;
+  width:56px; height:56px;
+  box-shadow:0 4px 16px rgba(11,39,64,.3);
+}
+html body #toTop.flecha{ min-width:44px; min-height:44px; }
+
+/* ============================================== 13. LIMPIEZA DE ELEMENTOS VACÍOS */
+/* Los contenedores vacíos pintan hoy un icono de globo terráqueo seguido
+   de nada. Se marcan desde el Body script: :empty no sirve porque el
+   marcado trae un espacio dentro (<ul class="socialLinks"> </ul>). */
+html body .txx-vacio{ display:none !important; }
+
+/* ============================================================= 14. UTILIDAD */
+.txx-skip{
+  position:absolute; left:-9999px; top:0; z-index:9999;
+  background:var(--txx-navy-ink); color:#fff;
+  padding:12px 20px; font-weight:700; text-decoration:none;
+}
+.txx-skip:focus{ left:8px; top:8px; }
+.txx-sr{
+  position:absolute; width:1px; height:1px;
+  padding:0; margin:-1px; overflow:hidden;
+  clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}
+
+/* ======================================================= 15. MOVIMIENTO */
+@media (prefers-reduced-motion:reduce){
+  html body *,
+  html body *:before,
+  html body *:after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+    scroll-behavior:auto !important;
+  }
+  html body .venta:hover,
+  html body .alquiler:hover{ transform:none; }
+}
