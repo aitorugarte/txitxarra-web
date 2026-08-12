@@ -186,7 +186,24 @@ html body header .datosContacto address ul li.agencia{
 html body #home article#mainText .datosContacto{ display:none !important; }
 
 /* =========================================================== 5. NAVEGACIÓN */
-html body #navegacion nav{ max-width:1400px; margin:0 auto; }
+/* La barra la pinta #navegacion (100% de ancho). El <nav> de Inmoweb lleva
+   ancho fijo (768/984/1220px) y #navLinks su propio fondo: dos bloques de
+   color distintos. Aquí el color lo pone solo el contenedor exterior. */
+html body #navegacion{ width:100% !important; }
+html body #navegacion nav{
+  width:auto !important;
+  max-width:1400px; margin:0 auto;
+}
+@media (min-width:768px){
+  html body #navegacion #navHeader #navLinks{ background:transparent !important; }
+}
+/* Inmoweb deja el hover en #292929, que no es de la paleta */
+html body #navegacion ul li a:hover,
+html body #navegacion ul li.activo a,
+html body #navegacion ul li:hover a{
+  background:var(--txx-navy-deep) !important;
+  color:var(--txx-white) !important;
+}
 html body #navegacion ul li > a{
   font-family:var(--txx-sans) !important;
   font-size:15px; font-weight:700;
@@ -244,23 +261,52 @@ html body #slider #slideshow .nivo-caption p{
 }
 
 /* ============================================================ 7. BUSCADOR */
+/* Inmoweb lo monta como panel vertical: #buscador absoluto en top:95px;left:50%
+   y >div con float:right, width:30%, height:755px y fondo rgba(37,39,42,.7)
+   !important. Hay que deshacer las cinco cosas o queda una columna oscura
+   colgando del hero. */
+html body #buscador{
+  position:relative !important;
+  top:auto !important; left:auto !important;
+  width:100% !important;
+  max-width:1260px;
+  margin:0 auto 44px !important;
+  padding:0 20px;
+  box-sizing:border-box;
+  z-index:5;                            /* por encima del velo del hero */
+}
 html body #buscador > div{
   width:100% !important;
   max-width:1100px;
+  height:auto !important;               /* Inmoweb: 755px fijos */
   min-height:0 !important;
+  float:none !important;
   margin:0 auto;
   animation:none !important;            /* fuera el wobble */
-  background:var(--txx-white);
+  background:var(--txx-white) !important;   /* el suyo es !important */
   box-shadow:var(--txx-shadow-hi);
   border-radius:var(--txx-r);
   border-top:3px solid var(--txx-minio);
-  padding:18px 20px;
+  padding:18px 20px !important;         /* Inmoweb: 120px arriba */
   box-sizing:border-box;
 }
+/* "Búsqueda avanzada" va absoluta a right:0;top:0 y se escapa del panel */
+html body #buscador .busquedaAvanzada,
+html body #buscador > div > .busquedaAvanzada > a{
+  position:static !important;
+  right:auto !important; left:auto !important;
+  top:auto !important; bottom:auto !important;
+  width:auto !important;
+  padding:0 !important;
+  text-align:left !important;
+}
+html body #buscador .busquedaAvanzada{ margin-top:12px; }
 /* Una sola pestaña: no necesita tira vertical */
 html body #buscador > div ul.tabs{
-  position:static !important; left:auto !important;
+  position:static !important;
+  left:auto !important; top:auto !important;   /* Inmoweb: top:25px */
   width:auto !important; border:none !important;
+  padding:0 !important;
   margin-bottom:10px;
 }
 html body #buscador > div ul.tabs li a{
@@ -319,6 +365,14 @@ html body article.offers .row{
   gap:26px;
   width:100% !important;
   padding:0 !important;
+}
+/* width:auto se encogía al contenido dentro de la celda: la tarjeta salía
+   de ~140px con el precio partido en dos líneas. width:100% la hace llenar
+   su hueco sea cual sea el modo de layout que acabe ganando. */
+html body article.offers .row > .venta,
+html body article.offers .row > .alquiler{
+  width:100% !important;
+  min-width:0;                          /* permite que el texto se recorte */
 }
 html body .venta,
 html body .alquiler{
@@ -547,11 +601,28 @@ html body aside #mailingList h3{
 }
 /* El <p> repite literalmente el <h3> */
 html body aside #mailingList > div > p{ display:none !important; }
+/* El sobre es un :before absoluto de 44×42 sobre el borde izquierdo.
+   Inmoweb reservaba sitio con padding-left:55px!important en input[type=text],
+   pero a11y() cambia el input a type="email" y esa regla deja de aplicar:
+   el texto se metía debajo del icono. Aquí no se depende del type. */
+html body aside #mailingList form .line.email{
+  width:100% !important;
+  max-width:420px;
+}
+html body aside #mailingList form .line.email:before{
+  width:48px !important; height:48px !important;
+  line-height:48px !important;
+  font-size:18px !important;
+  border-radius:var(--txx-r) 0 0 var(--txx-r) !important;
+}
 html body aside #mailingList form .line.email input{
-  min-height:48px; font-size:16px;      /* 16px evita el zoom de iOS */
+  width:100% !important;
+  height:48px !important; min-height:48px;
+  font-size:16px;                       /* 16px evita el zoom de iOS */
   border:1px solid var(--txx-line) !important;
   border-radius:var(--txx-r) !important;
-  padding:0 14px;
+  padding:0 14px 0 62px !important;     /* deja libre el sobre */
+  box-sizing:border-box;
 }
 html body aside #mailingList .txx-label{
   display:block; font-size:13px; font-weight:700;
@@ -566,13 +637,30 @@ html body footer{ background:var(--txx-navy-ink) !important; }
 html body footer #creditos{ border-top:1px solid rgba(255,255,255,.12); }
 html body footer a{ color:rgba(255,255,255,.9) !important; }
 html body footer a:hover{ color:var(--txx-white) !important; text-decoration:underline; }
-/* WhatsApp: 56px, por encima del pulgar y del botón "subir" */
-html body #whatsapp_chat a{
-  display:flex !important; align-items:center; justify-content:center;
-  width:56px; height:56px;
+/* WhatsApp y "subir" se solapaban: Inmoweb ancla el primero a top:79% y el
+   segundo a bottom:105px, así que se cruzan según la altura de la ventana.
+   Se apilan los dos en la esquina, con el WhatsApp abajo (más alcanzable).
+   No se toca background-image: ahí va el logo. */
+html body #whatsapp_chat{
+  top:auto !important;
+  bottom:20px !important;
+  right:20px !important;
+  width:56px !important; height:56px !important;
+  background-color:transparent !important;
+  background-size:56px !important;
+  border-radius:50% !important;
   box-shadow:0 4px 16px rgba(11,39,64,.3);
 }
-html body #toTop.flecha{ min-width:44px; min-height:44px; }
+html body #whatsapp_chat a{
+  display:flex !important; align-items:center; justify-content:center;
+  width:56px !important; height:56px !important;
+}
+html body #toTop.flecha{
+  right:20px !important;
+  bottom:88px !important;               /* 20 + 56 + 12 de aire */
+  margin-right:0 !important;
+  width:48px !important; height:48px !important;
+}
 
 /* ============================================== 13. LIMPIEZA DE ELEMENTOS VACÍOS */
 /* Los contenedores vacíos pintan hoy un icono de globo terráqueo seguido
@@ -591,6 +679,59 @@ html body .txx-vacio{ display:none !important; }
   position:absolute; width:1px; height:1px;
   padding:0; margin:-1px; overflow:hidden;
   clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}
+
+/* ============================================================== 16. MÓVIL */
+/* Breakpoint de Inmoweb: 0-767. */
+@media (max-width:767px){
+
+  /* Inmoweb oculta la barra de contacto entera, y con ella el teléfono,
+     que es el CTA de la agencia. Se recupera solo el teléfono y el móvil. */
+  html body header .datosContacto{ display:block !important; }
+  html body header .datosContacto address ul{
+    justify-content:center; gap:0 16px; padding:0 12px;
+  }
+  html body header .datosContacto address ul li{
+    line-height:40px; font-size:13px;
+  }
+  html body header .datosContacto address ul li.telefono,
+  html body header .datosContacto address ul li.movil{ font-size:17px; }
+  /* el resto (dirección, email, nombre) satura una pantalla estrecha */
+  html body header .datosContacto address ul li:not(.telefono):not(.movil){
+    display:none !important;
+  }
+
+  /* Una sola columna de tarjetas */
+  html body article.offers .row{
+    grid-template-columns:1fr;
+    gap:18px;
+  }
+
+  /* Botones flotantes: mismo apilado, más pequeños y más pegados */
+  html body #whatsapp_chat{
+    bottom:16px !important; right:16px !important;
+    width:48px !important; height:48px !important;
+    background-size:48px !important;
+  }
+  html body #whatsapp_chat a{ width:48px !important; height:48px !important; }
+  html body #toTop.flecha{
+    right:16px !important;
+    bottom:76px !important;             /* 16 + 48 + 12 */
+    width:44px !important; height:44px !important;
+  }
+
+  /* El buscador solo se muestra en la home; que no herede el panel oscuro */
+  html body #buscador{
+    padding:0 12px;
+    margin:0 auto 28px !important;
+  }
+  html body #buscador > div{ padding:16px 14px !important; }
+
+  /* Ficha: la tira de características principales en dos columnas */
+  html body #detalle #ficha .header .caracteristicasPrincipales ul li{
+    flex:1 1 50%;
+    padding:12px 14px !important;
+  }
 }
 
 /* ======================================================= 15. MOVIMIENTO */
